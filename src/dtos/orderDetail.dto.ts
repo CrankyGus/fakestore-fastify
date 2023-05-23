@@ -1,7 +1,7 @@
-export interface IOrderDetail{
-    orderId:number;
-    productId:number;
-    orderDetailId:number;
-    orderDetailQuantity:number;
-    orderDetailDiscount:number;
+export interface IOrderDetail {
+  orderId: number;
+  productId: number;
+  orderDetailId: number;
+  orderDetailQuantity: number;
+  orderDetailDiscount: number;
 }

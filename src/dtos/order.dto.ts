@@ -1,5 +1,5 @@
-export interface IOrder{
-    orderId: number;
-    userId: number;
-    status: string;
+export interface IOrder {
+  orderId: number;
+  userId: number;
+  status: string;
 }
