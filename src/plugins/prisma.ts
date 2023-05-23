@@ -22,4 +22,3 @@ const prismaPlugin: FastifyPluginAsync = fp(async (server, _opts) => {
 });
 
 export default prismaPlugin;
-
