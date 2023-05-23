@@ -1,9 +1,34 @@
 import { IProduct } from '../dtos/product.dto';
 import { prisma } from '../plugins/prisma';
 
-async function getAllProducts() {
-  const products = await prisma.products.findMany();
-  return products;
+interface IPagination {
+  currentPage: number;
+  totalPages: number;
+  totalItems: number;
+  itemsPerPage: number;
+  limit: number;
+  data: any[]; // Replace 'any' with the appropriate data type for your items
+}
+
+async function getAllProducts(page: number, pageSize: number): Promise<IPagination> {
+  const totalItems = await prisma.products.count();
+  const totalPages = Math.ceil(totalItems / pageSize);
+
+  const products = await prisma.products.findMany({
+    skip: (page - 1) * pageSize,
+    take: pageSize,
+  });
+
+  const result: IPagination = {
+    currentPage: page,
+    totalPages,
+    totalItems,
+    itemsPerPage: pageSize,
+    limit: totalItems,
+    data: products,
+  };
+
+  return result;
 }
 
 async function getProductById(id: number) {
@@ -23,7 +48,7 @@ async function createProduct({
   productImage,
   productPrice,
   productStock,
-  productTitle
+  productTitle,
 }: IProduct) {
   const product = await prisma.products.create({
     data: {
