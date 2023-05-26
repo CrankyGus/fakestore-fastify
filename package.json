@@ -1,5 +1,5 @@
 {
-  "name": "fastify-fakestore",
+  "name": "fastify-store",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -19,7 +19,6 @@
     "fastify-plugin": "^4.5.0"
   },
   "devDependencies": {
-    
     "@types/bcrypt": "^5.0.0",
     "@types/fastify-cors": "^2.1.0",
     "@types/node": "^20.2.3",
