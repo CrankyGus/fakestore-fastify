@@ -17,6 +17,9 @@ async function getAllProducts(page: number, pageSize: number): Promise<IPaginati
   const products = await prisma.products.findMany({
     skip: (page - 1) * pageSize,
     take: pageSize,
+    include: {
+      product_category: true
+    }
   });
 
   const result: IPagination = {
@@ -25,16 +28,26 @@ async function getAllProducts(page: number, pageSize: number): Promise<IPaginati
     totalItems,
     itemsPerPage: pageSize,
     limit: totalItems,
-    data: products,
+    data: products
   };
 
   return result;
 }
 
 async function getProductById(id: number) {
+  if (!id)
+    return await prisma.products.findMany({
+      include: {
+        product_category: true
+      }
+    });
+    
   const product = await prisma.products.findUnique({
     where: {
       id: id
+    },
+    include: {
+      product_category: true
     }
   });
   return product;
@@ -48,7 +61,7 @@ async function createProduct({
   productImage,
   productPrice,
   productStock,
-  productTitle,
+  productTitle
 }: IProduct) {
   const product = await prisma.products.create({
     data: {
