@@ -12,7 +12,6 @@ const authPlugin = fp(async function (fastify, opts) {
   fastify.decorate('authenticate', async function (request: FastifyRequest<{ Headers: { authorization: string } }>, reply: FastifyReply) {
     try {
       await request.jwtVerify();
-      
     } catch (err) {
       reply.status(401).send({ message: 'Unauthorized' });
     }

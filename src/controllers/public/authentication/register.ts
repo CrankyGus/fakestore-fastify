@@ -7,7 +7,7 @@ import { validateEmail, validatePassword } from '../../../helpers/validator';
 export default async function registerRoute(server: FastifyInstance, opts: any) {
   server.post('/register', async (request: FastifyRequest<{ Body: IUser }>, reply: FastifyReply) => {
     try {
-    //   const { email, password, ...rest } = request.body;
+      //   const { email, password, ...rest } = request.body;
       const emailValidation = await validateEmail(request.body.email);
       const passwordValidation = await validatePassword(request.body.password);
       const userExist = await prisma.user.findUnique({

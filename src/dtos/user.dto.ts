@@ -9,12 +9,12 @@ export interface IUser {
   userFirstName: string;
   userLastName: string;
   email: string;
-  password:string;
+  password: string;
   hash: string;
   userAddress: string;
   userCity: string;
   userPostalCode: number;
   userPhone: string;
-  userCountry:string;
+  userCountry: string;
   isAdmin: boolean;
 }

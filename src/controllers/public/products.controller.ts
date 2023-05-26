@@ -7,7 +7,7 @@ async function productsRoutes(server: FastifyInstance, opts: any) {
     const perpage = Number(request.query.perpage) || 10;
 
     try {
-      const products = await productsService.getAllProducts(page,perpage);
+      const products = await productsService.getAllProducts(page, perpage);
       reply.status(200).send(products);
     } catch (err) {
       reply.status(500).send(err);

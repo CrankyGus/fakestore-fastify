@@ -41,7 +41,7 @@ async function getProductById(id: number) {
         product_category: true
       }
     });
-    
+
   const product = await prisma.products.findUnique({
     where: {
       id: id

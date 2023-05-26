@@ -93,17 +93,11 @@ async function updateUser(id: string, userEmail: string, user: IUser) {
 }
 
 async function deleteUser(id: string) {
-    const user = await prisma.user.findUnique({
-        where: { id: Number(id) }
-    })
+  const user = await prisma.user.findUnique({
+    where: { id: Number(id) }
+  });
 
-    return user
+  return user;
 }
 
-export {
-    deleteUser,
-    updateUser,
-    createUser,
-    getUserById,
-    getAllUsers
-}
+export { deleteUser, updateUser, createUser, getUserById, getAllUsers };

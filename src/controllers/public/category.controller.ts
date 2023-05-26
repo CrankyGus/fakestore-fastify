@@ -34,7 +34,5 @@ async function categoriesRoutes(fastify: FastifyInstance, opts: any) {
       }
     }
   );
-
-
 }
 export default categoriesRoutes;

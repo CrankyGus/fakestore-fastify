@@ -11,7 +11,7 @@ import authPlugin from './plugins/authenticate';
 import categoriesPrivateRoutes from './controllers/private/category.controller';
 import productsPrivateRoutes from './controllers/private/products.controller';
 
-declare module "fastify" {
+declare module 'fastify' {
   interface FastifyInstance {
     authenticate: any;
   }
