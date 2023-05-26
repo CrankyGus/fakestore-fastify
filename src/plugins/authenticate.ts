@@ -9,11 +9,12 @@ const authPlugin = fp(async function (fastify, opts) {
     secret: process.env.JWT_SECRET as string
   });
 
-  fastify.decorate('authenticate', async function (request: FastifyRequest, reply: FastifyReply) {
+  fastify.decorate('authenticate', async function (request: FastifyRequest<{ Headers: { authorization: string } }>, reply: FastifyReply) {
     try {
       await request.jwtVerify();
+      
     } catch (err) {
-      reply.send(err);
+      reply.status(401).send({ message: 'Unauthorized' });
     }
   });
 });
