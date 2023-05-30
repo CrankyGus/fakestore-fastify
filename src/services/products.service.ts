@@ -7,7 +7,8 @@ interface IPagination {
   totalItems: number;
   itemsPerPage: number;
   limit: number;
-  data: any[]; // Replace 'any' with the appropriate data type for your items
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: any[];
 }
 
 async function getAllProducts(page: number, pageSize: number): Promise<IPagination> {
@@ -70,11 +71,15 @@ async function createProduct({
       price: productPrice,
       stock: productStock,
       product_image: productImage,
-      product_brandId: productBrandId,
       discontinued: productDicontinued,
       product_category: {
         connect: {
           id: productCategoryId
+        }
+      },
+      product_brand: {
+        connect: {
+          id: productBrandId
         }
       }
     }
