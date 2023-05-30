@@ -16,6 +16,10 @@ async function productsRoutes(server: FastifyInstance, opts: any) {
 
   server.get('/products/:id', async (request: FastifyRequest<{ Params: { id: string } }>, reply: FastifyReply) => {
     try {
+      const products = await productsService.getAllProducts(1, 10);
+
+      if (!request.params.id) reply.status(200).send(products);
+
       const product = await productsService.getProductById(Number(request.params.id));
       reply.status(200).send(product);
     } catch (err) {
