@@ -10,6 +10,10 @@ import loginRoute from './controllers/public/authentication/login';
 import authPlugin from './plugins/authenticate';
 import categoriesPrivateRoutes from './controllers/private/category.controller';
 import productsPrivateRoutes from './controllers/private/products.controller';
+import brandController from './controllers/public/brand.controller';
+import brandPrivateController from './controllers/private/brand.controller';
+import usersPrivateController from './controllers/private/authentication/users.controller';
+import orderPrivateController from './controllers/private/order.controller';
 
 declare module 'fastify' {
   interface FastifyInstance {
@@ -34,10 +38,14 @@ function build(opts = {}) {
   app.register(productsRoutes, { prefix: '/api' });
   app.register(registerRoute, { prefix: '/api/auth' });
   app.register(loginRoute, { prefix: '/api/auth' });
+  app.register(brandController, { prefix: '/api' });
 
   // Register private routes
+  app.register(usersPrivateController, { prefix: '/api/auth' });
   app.register(categoriesPrivateRoutes, { prefix: '/api' });
   app.register(productsPrivateRoutes, { prefix: '/api' });
+  app.register(brandPrivateController, { prefix: '/api' });
+  app.register(orderPrivateController, { prefix: '/api' });
 
   return app;
 }
