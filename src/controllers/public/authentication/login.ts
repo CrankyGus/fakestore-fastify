@@ -10,7 +10,7 @@ export default async function loginRoute(server: FastifyInstance, opts: any) {
 
       const user: User = await validateUser(email, password, reply);
 
-      const token = server.jwt.sign({ userId: user });
+      const token = server.jwt.sign({ userId: user.id, email: user.email }, { expiresIn: '1h' });
 
       return reply.header('set-cookie', token).send({ user, token });
     } catch (error) {
