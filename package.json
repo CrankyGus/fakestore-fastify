@@ -11,11 +11,12 @@
     "dev": "tsnd src/index.ts"
   },
   "dependencies": {
-    "fastify": "^4.17.0",
-    "@prisma/client": "^4.14.1",
-    "@fastify/jwt": "^6.7.1",
     "@fastify/auth": "^4.3.0",
+    "@fastify/cookie": "^8.3.0",
     "@fastify/cors": "^8.2.1",
+    "@fastify/jwt": "^6.7.1",
+    "@prisma/client": "^4.14.1",
+    "fastify": "^4.17.0",
     "fastify-plugin": "^4.5.0"
   },
   "devDependencies": {

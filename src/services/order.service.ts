@@ -2,6 +2,16 @@ import { IOrder } from '../dtos/order.dto';
 import { IOrderDetail } from '../dtos/orderDetail.dto';
 import { prisma } from '../plugins/prisma';
 
+interface IPagination {
+  currentPage: number;
+  totalPages: number;
+  totalItems: number;
+  itemsPerPage: number;
+  limit: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: any[];
+}
+
 async function createOrder(order: IOrder, userId: number, orderDetail?: IOrderDetail) {
   try {
     const orders = await prisma.order.create({
@@ -53,14 +63,28 @@ async function createOrder(order: IOrder, userId: number, orderDetail?: IOrderDe
 //   }
 // }
 
-async function getAllOrders() {
+async function getAllOrders(page: number, pageSize: number) {
   try {
+    const totalItems = await prisma.order.count();
+    const totalPages = Math.ceil(totalItems / pageSize);
+
     const orders = await prisma.order.findMany({
+      skip: (page - 1) * pageSize,
+      take: pageSize,
       include: {
         orderDetail: true
       }
     });
-    return orders;
+
+    const result: IPagination = {
+      currentPage: page,
+      totalPages,
+      totalItems,
+      itemsPerPage: pageSize,
+      limit: totalItems,
+      data: orders
+    };
+    return result;
   } catch (err) {
     return { message: 'Something went wrong!', err };
   }

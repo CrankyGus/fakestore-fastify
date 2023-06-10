@@ -23,7 +23,9 @@ async function getUserById(id: string, opts?: boolean) {
         orders: opts || false
       }
     });
-    return user;
+
+    const { hashpassword, ...rest }: any = user;
+    return rest;
   } catch (error) {
     return error;
   }

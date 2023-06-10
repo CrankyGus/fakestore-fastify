@@ -2,6 +2,7 @@ import Fastify from 'fastify';
 import prismaPlugin from './plugins/prisma';
 import fastifyCors from '@fastify/cors';
 import fastifyAuth from '@fastify/auth';
+import fastifyCookie from '@fastify/cookie';
 import healthCheck from './controllers/healthcheck';
 import categoriesRoutes from './controllers/public/category.controller';
 import productsRoutes from './controllers/public/products.controller';
@@ -28,9 +29,11 @@ function build(opts = {}) {
   app.register(prismaPlugin);
   app.register(fastifyAuth);
   app.register(fastifyCors, {
-    origin: '*'
+    origin: 'http://localhost:3000',
+    credentials: true
   });
   app.register(authPlugin);
+  app.register(fastifyCookie);
 
   // Register routes
   app.register(healthCheck, { prefix: '/api' });

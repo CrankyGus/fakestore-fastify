@@ -10,8 +10,13 @@ export default async function orderPrivateController(fastify: FastifyInstance, o
   fastify.get(
     '/orders',
     { preValidation: [fastify.authenticate] },
-    async (request: FastifyRequest<{ Headers: { authorization: string }; Querystring: { all: string } }>, reply: FastifyReply) => {
+    async (
+      request: FastifyRequest<{ Headers: { authorization: string }; Querystring: { all: string; page: string; perpage: string } }>,
+      reply: FastifyReply
+    ) => {
       try {
+        const page = Number(request.query.page) || 1;
+        const perpage = Number(request.query.perpage) || 10;
         const auth = request.headers.authorization;
         const token = auth.split(' ')[1];
         const decodedToken: any = fastify.jwt.decode(token);
@@ -23,9 +28,9 @@ export default async function orderPrivateController(fastify: FastifyInstance, o
             id: Number(userId)
           }
         });
-        const orders: any = await orderService.getAllOrders();
+        const orders: any = await orderService.getAllOrders(page, perpage);
 
-        const orderFilter = orders.filter((order: Order) => order.userId === Number(userId));
+        const orderFilter = orders.data.filter((order: Order) => order.userId === Number(userId));
 
         if (adminCheck?.isAdmin && all) reply.status(200).send(orders);
 

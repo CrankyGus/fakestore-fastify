@@ -6,7 +6,10 @@ dotenv.config();
 
 const authPlugin = fp(async function (fastify, opts) {
   fastify.register(fastifyJwt, {
-    secret: process.env.JWT_SECRET as string
+    secret: process.env.JWT_SECRET as string,
+    sign: {
+      expiresIn: '1h'
+    }
   });
 
   fastify.decorate('authenticate', async function (request: FastifyRequest<{ Headers: { authorization: string } }>, reply: FastifyReply) {

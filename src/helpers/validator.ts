@@ -25,13 +25,11 @@ export async function validateUser(email: string, password: string, reply: Fasti
     where: { email: email }
   });
 
-  if (!user) return reply.status(401).send({ message: 'Invalid credentials' });
+  if (!emailValidation) return reply.send({ message: 'Invalid email' });
 
+  if (!passwordValidation) return reply.send({ message: 'Invalid password' });
+  if (!user) return reply.status(500).send({ message: 'Invalid credentials' });
   const compare = await comparePassword(password, user.hashpassword || '');
-
-  if (!emailValidation) return reply.status(401).send({ message: 'Invalid email' });
-
-  if (!passwordValidation) return reply.status(401).send({ message: 'Invalid password' });
 
   if (!compare) {
     return reply.status(401).send({ message: 'Invalid credentials' });
